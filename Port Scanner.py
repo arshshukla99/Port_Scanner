@@ -1,44 +1,47 @@
 import socket
 import threading
+import time
+import sys
+
+print("-"*100)
+print(" "*35,"Simple Port Scanner")
+print("-"*100)
+
+start_time = time.time()
 
 ip = input("Enter your target IP Address: ")
-s_port = int(input("Enter the Starting Port Number: "))
-e_port = int(input("Enter the End Port Number : "))
+start_port = int(input("Enter the Starting Port Number: "))
+end_port = int(input("Enter the End Port Number : "))
 
 try:
     target_ip = socket.gethostbyname(ip)
-
-except ConnectionRefusedError:
-    print("Port is Closed")
-    
-except socket.timeout:
-    print("Connection Time Out :/")
     
 except socket.gaierror:
-    print("Invalid Ip")
+    print("Invalid Ip :/")
+    sys.exit()
 
-def scan_tcp(pt):
+def scan_tcp(port):
     sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    #print(f"Port {pt} is Scanning for TCP...")
     sock.settimeout(1)
-    con = sock.connect_ex((target_ip, pt))
+    con = sock.connect_ex((target_ip, port))
     if not con :
-        print(f"Port {pt} is OPEN :)")
+        try:
+            service = socket.getservbyport(port)
+        except OSError:
+            service = "Unknown"
+        print(f"Port {port} is OPEN : {service}")
     sock.close()
 
-for pt in range (s_port, e_port + 1) :
-    thread = threading.Thread(target = scan_tcp,args= (pt,))
+threads = []
+
+for port in range (start_port, end_port + 1) :
+    thread = threading.Thread(target = scan_tcp, args= (port,))
+    threads.append(thread)
     thread.start()
 
-def scan_udp(pu):
-    sock2 = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
-    sock2.settimeout(1)
-    #print(f"Scanning ports {pu} for UDP...")
-    con2 = sock2.connect_ex((target_ip,pu))
-    if not con2 :
-        print(f"Port {pu} is OPEN for UDP")
-    sock2.close()
+for thread in threads:
+    thread.join()
 
-for pu in range(s_port,e_port+1):
-    thread2 = threading.Thread(target = scan_udp,args= (pu,))
-    thread2.start()
+end_time = time.time()
+
+print("Total Time Taken :",(end_time - start_time),"sec")
