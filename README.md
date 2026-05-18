@@ -31,24 +31,30 @@ Then it Attempts to connect on each port which is in the range of Start Port to 
 ## How to Use :
 Step 1 : Clone the Repository
 
-'''bash
-git clone https://github.com/arshshukla99/Port_Scanner
+'''
+$ git clone https://github.com/arshshukla99/Port_Scanner
 '''
 
 Step 2 : Navigate to the Project Folder
 
-'''bash
-cd Port_Scanner.py
+'''
+$ cd Port_Scanner.py
 '''
 
 Step 3 : Run the Script
 
-'''bash
-python3 Port_Scanner.py
+'''
+$ python3 Port_Scanner.py
 '''
 
 ## Example Output
-'''bash
+'''
+----------------------------------------------------------------------------------------------------
+                                    Simple Port Scanner
+----------------------------------------------------------------------------------------------------
+Enter your target IP Address: 192.168.29.1
+Enter the Starting Port Number: 1
+Enter the End Port Number : 1000
 Port 53 is OPEN : domain
 Port 80 is OPEN : http
 Port 443 is OPEN : https
