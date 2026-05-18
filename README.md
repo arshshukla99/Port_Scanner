@@ -44,7 +44,6 @@ $ cd Port_Scanner.py
 Step 3 : Run the Script
 
 ```
-bash
 $ python3 Port_Scanner.py
 ```
 
