@@ -38,18 +38,18 @@ $ git clone https://github.com/arshshukla99/Port_Scanner
 Step 2 : Navigate to the Project Folder
 
 ```
-$ cd Port_Scanner.py
+$ cd port_scanner.py
 ```
 
-Step 3 : Run the Script
+Step 3 : Run the Script 'port_scanner.py'
 
 ```
-$ python3 Port_Scanner.py
+$ python3 port_scanner.py
 ```
 
 ## Example Output
 ```
-$ python3 Port_Scanner.py
+$ python3 port_scanner.py
 Enter your target IP Address: 192.xxx.xx.xx
 Enter the Starting Port Number: 1
 Enter the End Port Number : 1000
