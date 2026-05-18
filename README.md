@@ -25,28 +25,30 @@ It First takes several inputs from the user like - IP Address & Range of ports i
 Note - Supports Provide IPv4 address only.
 
 Then it Attempts to connect on each port which is in the range of Start Port to End Port on the provided IP address.
-If Connection Succeeds -> Port <PortNumber> is OPEN : <Service>
-If Connection Failed -> Port <PortNumber> is CLOSED
+-If Connection Succeeds -> Port {Number}is OPEN : <Service>
+-If Connection Failed -> Port is CLOSED
 
 ## How to Use :
 Step 1 : Clone the Repository
 
 '''bash
-git clone https://github.com/arshshukla99/Port_Scanner
+git clone https://github.com/arshshukla99/Port_Scanner'''
 
 Step 2 : Navigate to the Project Folder
 
 '''bash
-cd Port_Scanner.py
+cd Port_Scanner.py'''
 
 Step 3 : Run the Script
 
 '''bash
-python3 Port_Scanner.py
+python3 Port_Scanner.py'''
 
 ## Example Output
+'''
 Port 53 is OPEN : domain
 Port 80 is OPEN : http
 Port 443 is OPEN : https
 Total Time Taken : 11.538471221923828 sec
+'''
 
