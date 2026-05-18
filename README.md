@@ -59,3 +59,7 @@ Port 443 is OPEN : https
 Total Time Taken : 11.538471221923828 sec
 ```
 
+## Example Screenshot 
+<img width="1366" height="643" alt="image" src="https://github.com/user-attachments/assets/99a59c71-8c71-4ab5-bf63-07739c61aa34" />
+
+
