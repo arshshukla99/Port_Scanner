@@ -35,6 +35,7 @@ def port_scan(port):
         except OSError:
             print("Unknown Service")
         print(f"Port {port} is OPEN : {service}")
+    sock.close()
 
 threads = []
 
