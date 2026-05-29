@@ -42,7 +42,7 @@ start_time = time.time()
 start_port = args.start
 end_port = args.end
 
-if start_port < 1 or end_port > 65535 or start_port < end_port:
+if start_port < 1 or end_port > 65535 or start_port > end_port:
     print("Invalid Ports")
     sys.exit()
 
