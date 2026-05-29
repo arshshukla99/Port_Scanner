@@ -5,6 +5,7 @@
 import sys
 import time
 import socket
+import argparse
 import threading
 
 #Adds graphics Initially
