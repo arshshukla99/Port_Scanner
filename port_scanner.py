@@ -12,8 +12,6 @@ print('-'*100)
 print(" "*35,"Simple Port Scanner")
 print("-"*100)
 
-usage = " Give arguments in the Following Format : \n\npython3 port_scanner.py TARGET_IP START_PORT END_PORT"
-
 #Created Parser Obejct
 
 parser = argparse.ArgumentParser(description="Python Based Fast Port Scanner", usage="%(prog)s -t TARGET [MORE_OPTIONS] ", epilog= "Example - %(prog)s -s 1 -e 65535 -t 192.168.43.229")
@@ -23,7 +21,7 @@ parser = argparse.ArgumentParser(description="Python Based Fast Port Scanner", u
 parser.add_argument("-s","--start", type=int, help="Start Port", default=1)
 parser.add_argument("-e","--end", type=int, help= "End Port", default= 65535)
 parser.add_argument("-t","--target", dest="target", required= True, help="Target IP or Domain")
-parser.add_argument("-th","--threads", dest="threads",type=int, help= "No. of Threads To be Used", default=500)
+#parser.add_argument("-th","--threads", dest="threads",type=int, help= "No. of Threads To be Used", default=500)
 #parser.add_argument("-V","--verbose", dest="verbose", action= "store_true", help= "Verbose Output")
 parser.add_argument("-v","--version", action="version", version= "%(prog)s 1.1", help= "Diplay %(prog)s Version")
 args = parser.parse_args()
