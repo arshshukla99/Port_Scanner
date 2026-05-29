@@ -44,12 +44,12 @@ $ cd port_scanner.py
 Step 3 : Run the Script 'port_scanner.py'
 
 ```
-$ python3 port_scanner.py 192.168.43.169 1 1000
+$ python3 port_scanner.py -t 192.168.43.169 -s 1 -e 1000
 ```
 
 ## Example Output
 ```
-$ python3 port_scanner.py 192.168.43.169 1 1000
+$ python3 port_scanner.py -t 192.168.43.169 -s 1 -e 1000
 ----------------------------------------------------------------------------------------------------
                                     Simple Port Scanner
 ----------------------------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ Scan Performed in : 2.6426780223846436
 ```
 
 ## Example Screenshot 
-<img width="1366" height="643" alt="image" src="https://github.com/user-attachments/assets/94a6040a-1932-4cfa-b148-198704a3bb6e" />
+<img width="1366" height="643" alt="image" src="https://github.com/user-attachments/assets/c833f2e1-452a-40e0-bf38-075212667c45" />
 
 
 
