@@ -12,8 +12,6 @@ print('-'*100)
 print(" "*35,"Simple Port Scanner")
 print("-"*100)
 
-usage = " Give arguments in the Following Format : \n\npython3 port_scanner.py TARGET_IP START_PORT END_PORT"
-
 #Created Parser Obejct
 
 parser = argparse.ArgumentParser(description="Python Based Fast Port Scanner", usage="%(prog)s -t TARGET [MORE_OPTIONS] ", epilog= "Example - %(prog)s -s 1 -e 65535 -t 192.168.43.229")
