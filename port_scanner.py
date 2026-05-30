@@ -36,9 +36,6 @@ try :
 except socket.gaierror:
     print("Ip isn't Correct !")
     sys.exit()
-
-if args.verbose == True:
-    print("Resolving IP :", args.target)
     
 start_time = time.time()
 
@@ -50,18 +47,20 @@ if start_port < 1 or end_port > 65535 or start_port > end_port:
     print("Invalid Ports")
     sys.exit()
 
-print(f"Target IP : {args.target}")
-print(f"Port Ranges : {args.start}-{args.end}")
-print(f"Threads : {args.threads}")
-print()
+if args.verbose:
+    print(f"Target IP : {args.target}")
+    print(f"Port Ranges : {args.start}-{args.end}")
+    print(f"Threads : {args.threads}")
+    print()
 
 #Searches for open ports and service on each port
+dict_port = {}
 
 def port_scan(port):
     sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
     sock.settimeout(1) 
     try:
-        if args.verbose == True :
+        if args.verbose :
             print("Scanning Port :",port)
             
         con = sock.connect_ex((target,port))
@@ -70,7 +69,10 @@ def port_scan(port):
                 service = socket.getservbyport(port)
             except OSError:
                 service = "Unknown Service"
-            print(f"Port {port} is OPEN : {service}")
+            dict_port[port] = service
+            
+            if not args.verbose:
+                print(f"Port {port} is OPEN : {service}")
     finally:
         sock.close()
 threads = []
@@ -87,6 +89,10 @@ for port in range(start_port,end_port+1):
 for thread in threads:
     thread.join()
 
+if args.verbose:
+    for i in dict_port:
+        print(f"Port {i} is OPEN : {dict_port[i]}")
+    
 print()
 
 end_time = time.time()   
