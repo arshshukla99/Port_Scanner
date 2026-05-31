@@ -37,7 +37,7 @@ except socket.gaierror:
     
 start_time = time.time()
 
-#try to get ip between given arguments and checks for errors in ip
+#try to get ip between given arguments and checks for errors in ports
 start_port = args.start
 end_port = args.end
 
