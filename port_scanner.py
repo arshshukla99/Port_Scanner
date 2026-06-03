@@ -61,7 +61,7 @@ def port_scan(port):
     try:
         if args.verbose :
             print("Scanning Port :",port)
-        global con    
+            
         con = sock.connect_ex((target,port))
         if not con:
             try :
