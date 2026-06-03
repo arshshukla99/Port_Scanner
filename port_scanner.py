@@ -4,6 +4,7 @@
 
 import sys
 import time
+import queue
 import socket
 import argparse
 import threading
@@ -73,12 +74,26 @@ def port_scan(port):
                 print(f"Port {port} is OPEN : {service}")
     finally:
         sock.close()
+
+def thread_worker():
+    while not q.empty():
+        port = q.get()
+        try :
+            port_scan(port)
+        finally:
+            q.task_done()
+           
 threads = []
+
+q = queue.Queue()
 
 #threads.start() creates a thread for each port scan and store each thread created in a threads list
 
-for port in range(start_port,end_port+1):
-    thread = threading.Thread(target=port_scan,args=(port,))
+for i in range(start_port,end_port+1):
+    q.put(i)
+    
+for _ in range(args.threads):
+    thread = threading.Thread(target=thread_worker)
     thread.start()
     threads.append(thread)
     
