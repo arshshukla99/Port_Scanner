@@ -107,7 +107,7 @@ if args.verbose:
     for i in dict_port:
         print(f"Port {i} is OPEN : {dict_port[i]}")
       
-if con:
+if len(dict_port):
     print()
     print(f"No OPEN Ports available in provided Port Range : {start_port}-{end_port}")
     
