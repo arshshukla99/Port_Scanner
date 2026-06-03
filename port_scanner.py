@@ -61,7 +61,7 @@ def port_scan(port):
     try:
         if args.verbose :
             print("Scanning Port :",port)
-            
+        global con    
         con = sock.connect_ex((target,port))
         if not con:
             try :
@@ -72,6 +72,7 @@ def port_scan(port):
             
             if not args.verbose:
                 print(f"Port {port} is OPEN : {service}")
+        
     finally:
         sock.close()
 
@@ -105,8 +106,13 @@ for thread in threads:
 if args.verbose:
     for i in dict_port:
         print(f"Port {i} is OPEN : {dict_port[i]}")
+      
+if con:
+    print()
+    print(f"No OPEN Ports available in provided Port Range : {start_port}-{end_port}")
     
 print()
 
 end_time = time.time()   
 print("Scan Performed in :",(end_time - start_time))
+
