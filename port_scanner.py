@@ -24,7 +24,7 @@ parser.add_argument("-e","--end", type=int, help= "End Port", default= 65535)
 parser.add_argument("-t","--target", dest="target", required= True, help="Target IP or Domain")
 parser.add_argument("-th","--threads", dest="threads",type=int, help= "No. of Threads To be Used", default=500)
 parser.add_argument("-V","--verbose", dest="verbose", action= "store_true", help= "Verbose Output")
-parser.add_argument("-v","--version", action="version", version= "%(prog)s 1.1", help= "Diplay %(prog)s Version")
+parser.add_argument("-v","--version", action="version", version= "%(prog)s 1.2", help= "Diplay %(prog)s Version")
 args = parser.parse_args()
 
 
@@ -76,6 +76,8 @@ def port_scan(port):
     finally:
         sock.close()
 
+#function for getting next available port in the queue when finish scanning the previous one
+
 def thread_worker():
     while not q.empty():
         port = q.get()
@@ -85,14 +87,13 @@ def thread_worker():
             q.task_done()
            
 threads = []
-
 q = queue.Queue()
-
-#threads.start() creates a thread for each port scan and store each thread created in a threads list
 
 for i in range(start_port,end_port+1):
     q.put(i)
-    
+
+#threads.start() creates a thread for each port scan and store each thread created in a threads list
+
 for _ in range(args.threads):
     thread = threading.Thread(target=thread_worker)
     thread.start()
@@ -110,9 +111,7 @@ if args.verbose:
 if len(dict_port) == 0:
     print()
     print(f"No OPEN Ports available in provided Port Range : {start_port}-{end_port}")
-    
+
+end_time = time.time()
 print()
-
-end_time = time.time()   
 print("Scan Performed in :",(end_time - start_time))
-
