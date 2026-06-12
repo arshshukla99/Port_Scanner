@@ -24,7 +24,7 @@ parser.add_argument("-e","--end", type=int, help= "End Port", default= 65535)
 parser.add_argument("-t","--target", dest="target", required= True, help="Target IP or Domain")
 parser.add_argument("-th","--threads", dest="threads",type=int, help= "No. of Threads To be Used", default=500)
 parser.add_argument("-V","--verbose", dest="verbose", action= "store_true", help= "Verbose Output")
-parser.add_argument("-v","--version", action="version", version= "%(prog)s 1.2", help= "Diplay %(prog)s Version")
+parser.add_argument("-v","--version", action="version", version= "%(prog)s 1.1", help= "Diplay %(prog)s Version")
 args = parser.parse_args()
 
 
@@ -61,22 +61,30 @@ def port_scan(port):
     try:
         if args.verbose :
             print("Scanning Port :",port)
-            
+        global con    
         con = sock.connect_ex((target,port))
         if not con:
+        
+            #Trying to get service on each port
             try :
                 service = socket.getservbyport(port)
             except OSError:
                 service = "Unknown Service"
             dict_port[port] = service
             
+            # Banner Grabbing for Verbose Output
+            global banner
+            try:
+                banner = sock.recv(1024).decode(errors="ignore")
+                
+            except socket.timeout:
+                banner = "Unknown Banner"
+                
             if not args.verbose:
                 print(f"Port {port} is OPEN : {service}")
         
     finally:
         sock.close()
-
-#function for getting next available port in the queue when finish scanning the previous one
 
 def thread_worker():
     while not q.empty():
@@ -87,13 +95,14 @@ def thread_worker():
             q.task_done()
            
 threads = []
-q = queue.Queue()
 
-for i in range(start_port,end_port+1):
-    q.put(i)
+q = queue.Queue()
 
 #threads.start() creates a thread for each port scan and store each thread created in a threads list
 
+for i in range(start_port,end_port+1):
+    q.put(i)
+    
 for _ in range(args.threads):
     thread = threading.Thread(target=thread_worker)
     thread.start()
@@ -105,12 +114,14 @@ for thread in threads:
     thread.join()
 
 if args.verbose:
+    print()
+    print(f"Total {end_port - len(dict_port)} are CLOSED and {len(dict_port)} are OPEN :-\n")
     for i in dict_port:
-        print(f"Port {i} is OPEN : {dict_port[i]}")
+        print(f"Port {i} is OPEN : {dict_port[i]}\nBanner : {banner}\n")
       
 if len(dict_port) == 0:
     print()
-    print(f"No OPEN Ports available in provided Port Range : {start_port}-{end_port}")
+    print(f"No OPEN Ports available in provided Port Range : {start_port}-{end_port} ")
 
 end_time = time.time()
 print()
