@@ -8,12 +8,17 @@ It was made to understand :
 - Services on each ports.
 - Socket Programming.
 - Multithreading in Python.
+- Service Detection
+- Banner Grabbing
+- Error Management
 
 ## Features Include :
 - Scan Real Time custom port ranges.
 - Can Scan all the 65535 Ports.
 - Proper Error Handling Included.
 - Multithread support that provide fast results.
+- Service Detection for all the 65535 ports.
+- Banner Grabbing for Open Ports.
 
 ## Technologies Used :
 - Python 3.14.2
