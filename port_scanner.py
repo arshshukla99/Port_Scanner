@@ -92,7 +92,8 @@ def port_scan(port):
             
     finally:
         sock.close()
-
+        
+#Ports are extracted in the queue and Checked if they are OPEN
 def thread_worker():
     while not q.empty():
         port = q.get()
