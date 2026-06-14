@@ -60,8 +60,7 @@ def port_scan(port):
     sock.settimeout(1) 
     try:
         if args.verbose :
-            print("Scanning Port :",port)
-        global con    
+            print("Scanning Port :",port)   
         con = sock.connect_ex((target,port))
         if not con:
         
@@ -70,32 +69,41 @@ def port_scan(port):
                 service = socket.getservbyport(port)
             except OSError:
                 service = "Unknown Service"
-            dict_port[port] = service
-            
-            # Banner Grabbing for Verbose Output
-            global banner
-            try:
-                banner = sock.recv(1024).decode(errors="ignore")
-                
-            except socket.timeout:
-                banner = "Unknown Banner"
                 
             if not args.verbose:
                 print(f"Port {port} is OPEN : {service}")
-        
+                
+            #Banner Grabbing if particular ports are open
+            try:
+                if port in [21,22,25,110]:
+                    banner = sock.recv(1024).decode(errors="ignore")
+                
+                elif port == 80:
+                    request = f"GET / HTTP/1.1\r\nHost: {args.target}\r\n\r\n"
+                    sock.sendall(request.encode())
+                    banner = sock.recv(1024).decode(errors="ignore")
+                else:
+                    banner = "Unknown Banner"
+                    
+            except socket.timeout:
+                banner = "Unknown Banner"
+            dict_port[port] = {"service" : service,
+                               "banner" : banner}
+            
     finally:
         sock.close()
 
 def thread_worker():
     while not q.empty():
         port = q.get()
+        
         try :
             port_scan(port)
+
         finally:
             q.task_done()
            
 threads = []
-
 q = queue.Queue()
 
 #threads.start() creates a thread for each port scan and store each thread created in a threads list
@@ -114,10 +122,10 @@ for thread in threads:
     thread.join()
 
 if args.verbose:
-    print()
-    print(f"Total {end_port - len(dict_port)} are CLOSED and {len(dict_port)} are OPEN :-\n")
+    print(f"\nTotal Ports Scanned : {end_port - start_port + 1}")
+    print(f"Total {(end_port - start_port) - len(dict_port) + 1} are CLOSED and {len(dict_port)} are OPEN :-\n")
     for i in dict_port:
-        print(f"Port {i} is OPEN : {dict_port[i]}\nBanner : {banner}\n")
+        print(f"Port {i} is OPEN : {dict_port[i]['service']}\nBanner : {dict_port[i]['banner']}\n")
       
 if len(dict_port) == 0:
     print()
