@@ -8,6 +8,7 @@ import queue
 import socket
 import argparse
 import threading
+from colorama import Fore, Style
 
 print('-'*100)
 print(" "*35,"Simple Port Scanner")
@@ -33,7 +34,7 @@ args = parser.parse_args()
 try :
     target = socket.gethostbyname(args.target)
 except socket.gaierror:
-    print("Ip isn't Correct !")
+    print(Fore.LIGHTRED_EX + "Ip isn't Correct !" + Style.RESET_ALL)
     sys.exit()
     
 start_time = time.time()
@@ -43,7 +44,7 @@ start_port = args.start
 end_port = args.end
 
 if start_port < 1 or end_port > 65535 or start_port > end_port:
-    print("Invalid Ports")
+    print(Fore.LIGHTRED_EX + "Invalid Ports" + Style.RESET_ALL)
     sys.exit()
 
 if args.verbose:
@@ -71,9 +72,8 @@ def port_scan(port):
                 service = "Unknown Service"
                 
             if not args.verbose:
-                print(f"Port {port} is OPEN : {service}")
-                
-            #Banner Grabbing if particular ports are open
+                print(f"Port {port} is " + Fore.LIGHTGREEN_EX + f"OPEN" + Style.RESET_ALL + Fore.CYAN + f" : {service}" + Style.RESET_ALL)
+
             try:
                 if port in [21,22,25,110]:
                     banner = sock.recv(1024).decode(errors="ignore")
@@ -82,6 +82,7 @@ def port_scan(port):
                     request = f"GET / HTTP/1.1\r\nHost: {args.target}\r\n\r\n"
                     sock.sendall(request.encode())
                     banner = sock.recv(1024).decode(errors="ignore")
+               
                 else:
                     banner = "Unknown Banner"
                     
@@ -92,8 +93,7 @@ def port_scan(port):
             
     finally:
         sock.close()
-        
-#Ports are extracted in the queue and Checked if they are OPEN
+
 def thread_worker():
     while not q.empty():
         port = q.get()
@@ -122,15 +122,17 @@ for _ in range(args.threads):
 for thread in threads:
     thread.join()
 
+#Coloured Outputs Using Colorama
+
 if args.verbose:
     print(f"\nTotal Ports Scanned : {end_port - start_port + 1}")
     print(f"Total {(end_port - start_port) - len(dict_port) + 1} are CLOSED and {len(dict_port)} are OPEN :-\n")
-    for i in dict_port:
-        print(f"Port {i} is OPEN : {dict_port[i]['service']}\nBanner : {dict_port[i]['banner']}\n")
+    for i in sorted(dict_port):
+        print(f"Port {i} is " + Fore.GREEN + "OPEN" + Style.RESET_ALL + " : " + Fore.YELLOW + f"{dict_port[i]['service']}" + Style.RESET_ALL + "\nBanner : " + Fore.LIGHTBLUE_EX + f"{dict_port[i]['banner']}\n" + Style.RESET_ALL)
       
 if len(dict_port) == 0:
     print()
-    print(f"No OPEN Ports available in provided Port Range : {start_port}-{end_port} ")
+    print(Fore.LIGHTRED_EX + f"No OPEN Ports" + Style.RESET_ALL +f" available in provided Port Range : {start_port}-{end_port}")
 
 end_time = time.time()
 print()
