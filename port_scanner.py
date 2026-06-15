@@ -25,7 +25,7 @@ parser.add_argument("-e","--end", type=int, help= "End Port", default= 65535)
 parser.add_argument("-t","--target", dest="target", required= True, help="Target IP or Domain")
 parser.add_argument("-th","--threads", dest="threads",type=int, help= "No. of Threads To be Used", default=500)
 parser.add_argument("-V","--verbose", dest="verbose", action= "store_true", help= "Verbose Output")
-parser.add_argument("-v","--version", action="version", version= "%(prog)s 1.1", help= "Diplay %(prog)s Version")
+parser.add_argument("-v","--version", action="version", version= "%(prog)s 1.3", help= "Diplay %(prog)s Version")
 args = parser.parse_args()
 
 
