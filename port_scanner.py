@@ -4,6 +4,7 @@
 
 import sys
 import time
+import json
 import queue
 import socket
 import argparse
@@ -25,7 +26,8 @@ parser.add_argument("-e","--end", type=int, help= "End Port", default= 65535)
 parser.add_argument("-t","--target", dest="target", required= True, help="Target IP or Domain")
 parser.add_argument("-th","--threads", dest="threads",type=int, help= "No. of Threads To be Used", default=500)
 parser.add_argument("-V","--verbose", dest="verbose", action= "store_true", help= "Verbose Output")
-parser.add_argument("-v","--version", action="version", version= "%(prog)s 1.3", help= "Diplay %(prog)s Version")
+parser.add_argument("-j","--json", dest="json", help = "Explort JSON Output")
+parser.add_argument("-v","--version", action="version", version= "%(prog)s 1.4", help= "Diplay %(prog)s Version")
 args = parser.parse_args()
 
 
@@ -137,3 +139,13 @@ if len(dict_port) == 0:
 end_time = time.time()
 print()
 print("Scan Performed in :",(end_time - start_time))
+
+if args.json:
+    json_file = args.json
+    if json_file.endswith(".json"):
+        with open(f"{args.json}", "w") as f:
+            json.dump(dict_port, f, indent=2)
+            print(f"\nFile {args.json} " + Fore.LIGHTGREEN_EX + "EXPORT SUCCESSFUL" + Style.RESET_ALL + " Saved to this Current Path :)")
+    else:
+        print(f"\n{args.json} should contain " + Fore.LIGHTRED_EX + ".json" + Style.RESET_ALL + " extension")
+        print("EXPORT Unsuccessful :/")
