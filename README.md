@@ -19,6 +19,7 @@ It was made to understand :
 - Multithread support that provide fast results.
 - Service Detection for all the 65535 ports.
 - Banner Grabbing for Open Ports.
+- JSON Export of the Open Ports
 
 ## Technologies Used :
 - Python 3.14.2
