@@ -11,6 +11,7 @@ It was made to understand :
 - Service Detection
 - Banner Grabbing
 - Error Management
+- Working with json files
 
 ## Features Include :
 - Scan Real Time custom port ranges.
