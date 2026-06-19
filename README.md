@@ -8,10 +8,10 @@ It was made to understand :
 - Services on each ports.
 - Socket Programming.
 - Multithreading in Python.
-- Service Detection
-- Banner Grabbing
+- Service Detection.
+- Banner Grabbing.
 - Error Management
-- Working with json files
+- Working with json Files.
 
 ## Features Include :
 - Scan Real Time custom port ranges.
@@ -26,6 +26,10 @@ It was made to understand :
 - Python 3.14.2
 - Socket Module
 - Threading Module
+- Sys Module
+- Argparse Module
+- Colorama Module
+- JSON Module
 
 ## How it Works :
 It First takes several inputs from the user like - IP Address & Range of ports i.e. Starting Port and Ending Port.
