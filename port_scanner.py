@@ -2,6 +2,7 @@
 
 #!/usr/bin/python3
 
+import csv
 import sys
 import time
 import json
@@ -15,7 +16,7 @@ print('-'*100)
 print(" "*35,"Simple Port Scanner")
 print("-"*100)
 
-#Created Parser Obejct
+#Created Parser Object
 
 parser = argparse.ArgumentParser(description="Python Based Fast Port Scanner", usage="%(prog)s -t TARGET [MORE_OPTIONS] ", epilog= "Example - %(prog)s -s 1 -e 65535 -t 192.168.43.229")
 
@@ -26,10 +27,10 @@ parser.add_argument("-e","--end", type=int, help= "End Port", default= 65535)
 parser.add_argument("-t","--target", dest="target", required= True, help="Target IP or Domain")
 parser.add_argument("-th","--threads", dest="threads",type=int, help= "No. of Threads To be Used", default=500)
 parser.add_argument("-V","--verbose", dest="verbose", action= "store_true", help= "Verbose Output")
-parser.add_argument("-j","--json", dest="json", help = "Explort JSON Output")
 parser.add_argument("-v","--version", action="version", version= "%(prog)s 1.4", help= "Diplay %(prog)s Version")
+parser.add_argument("-j","--json", dest="json", help = "Explort JSON Output")
+parser.add_argument("-o","--output", dest="output", help = "Export Output (To a .csv file)")
 args = parser.parse_args()
-
 
 # Extracting IP given by User
 
@@ -149,3 +150,12 @@ if args.json:
     else:
         print(f"\n{args.json} should contain " + Fore.LIGHTRED_EX + ".json" + Style.RESET_ALL + " extension")
         print("EXPORT Unsuccessful :/")
+
+if args.output:
+    if (args.output).endswith(".csv"):
+        with open(f"{args.output}", "w", newline='') as f:
+            fobj = csv.writer(f)
+            fobj.writerow(["Port","Service","Banner"])
+            for i in dict_port:
+                fobj.writerow([i,dict_port[i]["service"],dict_port[i]["banner"]])
+            print(f"\nFile {args.output} " + Fore.LIGHTGREEN_EX + "EXPORT SUCCESSFUL" + Style.RESET_ALL + " Saved to this Current Path :)")
