@@ -141,6 +141,7 @@ end_time = time.time()
 print()
 print("Scan Performed in :",(end_time - start_time))
 
+#Saving output of the Whole Scan in JSON File
 if args.json:
     json_file = args.json
     if json_file.endswith(".json"):
@@ -151,6 +152,7 @@ if args.json:
         print(f"\n{args.json} should contain " + Fore.LIGHTRED_EX + ".json" + Style.RESET_ALL + " extension")
         print("EXPORT Unsuccessful :/")
 
+#Saving Output of the Whole scan in CSV file
 if args.output:
     if (args.output).endswith(".csv"):
         with open(f"{args.output}", "w", newline='') as f:
