@@ -111,7 +111,6 @@ threads = []
 q = queue.Queue()
 
 #threads.start() creates a thread for each port scan and store each thread created in a threads list
-
 for i in range(start_port,end_port+1):
     q.put(i)
     
@@ -126,7 +125,6 @@ for thread in threads:
     thread.join()
 
 #Coloured Outputs Using Colorama
-
 if args.verbose:
     print(f"\nTotal Ports Scanned : {end_port - start_port + 1}")
     print(f"Total {(end_port - start_port) - len(dict_port) + 1} are CLOSED and {len(dict_port)} are OPEN :-\n")
