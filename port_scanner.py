@@ -197,11 +197,12 @@ if args.output:
     if (args.output).endswith(".csv"):
         with open(f"{args.output}", "w", newline='') as f:
             fobj = csv.writer(f)
-            fobj.writerow(["Port","Service","Banner"])
-            for i in dict_port:
-                fobj.writerow([i,dict_port[i]["service"],dict_port[i]["banner"]])
             if args.os_detect:
                 fobj.writerow([])
                 fobj.writerow(["OS", os_name])
+                            
+            fobj.writerow(["Port","Service","Banner"])
+            for i in dict_port:
+                fobj.writerow([i,dict_port[i]["service"],dict_port[i]["banner"]])
                 
             print(f"\nFile {args.output} " + Fore.LIGHTGREEN_EX + "EXPORT SUCCESSFUL" + Style.RESET_ALL + " Saved to this Current Path :)")
