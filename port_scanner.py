@@ -99,8 +99,11 @@ def port_scan(port):
             except socket.timeout:
                 banner = "Unknown Banner"
                 
-            dict_port[port] = {"service" : service,
-                               "banner" : banner}
+            lock = threading.Lock()
+            
+            with lock:
+                dict_port[port] = {"service" : service,
+                                   "banner" : banner }
             
     finally:
         sock.close()
