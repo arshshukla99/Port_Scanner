@@ -1,5 +1,5 @@
 # Python TCP Port Scanner
-A Simple Multithreaded Port Scanner built using Sockets.
+A Simple Multithreaded Port Scanner built using Socket.
 
 It was made to understand :
 - TCP Connections.
@@ -12,6 +12,7 @@ It was made to understand :
 - Banner Grabbing.
 - Error Management
 - Working with json Files.
+- Thread Lock
 
 ## Features Include :
 - Scan Real Time custom port ranges.
@@ -20,7 +21,8 @@ It was made to understand :
 - Multithread support that provide fast results.
 - Service Detection for all the 65535 ports.
 - Banner Grabbing for Open Ports.
-- JSON Export of the Open Ports
+- JSON Export of Open Ports.
+- CSV Export of Open Ports.
 
 ## Technologies Used :
 - Python 3.14.2
