@@ -1,5 +1,5 @@
 # Python TCP Port Scanner
-A Simple Multithreaded Port Scanner built using Socket.
+A Simple Multithreaded Port Scanner built using Sockets.
 
 It was made to understand :
 - TCP Connections.
