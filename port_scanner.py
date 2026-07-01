@@ -163,13 +163,22 @@ if args.verbose:
 
 #prints OS of the Target IP
 if args.os_detect:
+    if len(dict_port) != 0:
         print("Performing OS Detection...")
         os_name = os_detect(target)
         if os_name == "python-nmap isn't installed :/\nTry Installing it with : 'pip install python-nmap'" or os_name.startswith("OS Detection Failed"):
             print(f"\n{os_name}")
         else:
             print(f"\nOS : {os_name}")
-                
+    else:
+        print(Fore.LIGHTRED_EX + "WARNING !" + Style.RESET_ALL + " No Open Ports Found. OS Detection may be inaccurate.")
+        print("Performing OS Detection...")
+        os_name = os_detect(target)
+        if os_name == "python-nmap isn't installed :/\nTry Installing it with : 'pip install python-nmap'" or os_name.startswith("OS Detection Failed"):
+            print(f"\n{os_name}")
+        else:
+            print(f"\nOS : {os_name}")
+            
 if len(dict_port) == 0:
     print()
     print(Fore.LIGHTRED_EX + f"No OPEN Ports" + Style.RESET_ALL +f" available in provided Port Range : {start_port}-{end_port}")
