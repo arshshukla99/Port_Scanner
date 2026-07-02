@@ -93,13 +93,13 @@ def port_scan(port):
                     sock.sendall(request.encode())
                     banner = sock.recv(1024).decode(errors="ignore")
                 
-                if port == 443:
-                try :
-                    import ssl
-                    context = ssl.create_default_context()
-                    sock_context = context.wrap_sockets(sock,server_hostname=args.target)
+                '''if port == 443:
+                    try :
+                        import ssl
+                        context = ssl.create_default_context()
+                        sock_context = context.wrap_sockets(sock,server_hostname=args.target)
                     
-                    #request = f"GET / HTTP/1.1\r\n"
+                        request = f"GET / HTTP/1.1\r\n'''
                
                 else:
                     banner = "Unknown Banner"
