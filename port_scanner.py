@@ -85,13 +85,21 @@ def port_scan(port):
                 print(f"Port {port} is " + Fore.LIGHTGREEN_EX + f"OPEN" + Style.RESET_ALL + Fore.CYAN + f" : {service}" + Style.RESET_ALL)
 
             try:
-                if port in [21,22,25,110]:
+                if port in [21,22,25,110,3306]:
                     banner = sock.recv(1024).decode(errors="ignore")
                 
                 elif port == 80:
                     request = f"GET / HTTP/1.1\r\nHost: {args.target}\r\n\r\n"
                     sock.sendall(request.encode())
                     banner = sock.recv(1024).decode(errors="ignore")
+                
+                if port == 443:
+                try :
+                    import ssl
+                    context = ssl.create_default_context()
+                    sock_context = context.wrap_sockets(sock,server_hostname=args.target)
+                    
+                    #request = f"GET / HTTP/1.1\r\n"
                
                 else:
                     banner = "Unknown Banner"
