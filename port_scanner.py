@@ -226,3 +226,4 @@ if args.output:
                 fobj.writerow([i,dict_port[i]["service"],dict_port[i]["banner"]])
                 
             print(f"\nFile {args.output} " + Fore.LIGHTGREEN_EX + "EXPORT SUCCESSFUL" + Style.RESET_ALL + " Saved to this Current Path :)")
+
