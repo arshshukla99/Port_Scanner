@@ -99,7 +99,9 @@ def port_scan(port):
                         context = ssl.create_default_context()
                         sock_context = context.wrap_sockets(sock,server_hostname=args.target)
                     
-                        request = f"GET / HTTP/1.1\r\n'''
+                        request = f"GET / HTTP/1.1\r\n"
+f"Host : {args.target}"
+"Connection: close\r\n"'''
                
                 else:
                     banner = "Unknown Banner"
