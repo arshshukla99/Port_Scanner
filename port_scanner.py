@@ -1,9 +1,9 @@
 #Shebang line
 
 #!/usr/bin/python3
-
 import csv
 import sys
+import ssl
 import time
 import json
 import queue
@@ -95,14 +95,15 @@ def port_scan(port):
                 
                 if port == 443:
                     try :
-                        import ssl
                         context = ssl.create_default_context()                             #creates the tls configuration/object or you can say wrapper using ssl.
-                        enc_sock = context.wrap_sockets(sock,server_hostname=args.target)  #wraps the socket request with the tls layer and does tls handshake which establishes the encrypted session.
+                        enc_sock = context.wrap_socket(sock,server_hostname=args.target)  #wraps the socket request with the tls layer and does tls handshake which establishes the encrypted session.  
                     
                         request = f"GET / HTTP/1.1\r\nHost: {args.target}\r\nConnection: close\r\n\r\n"
                     
                         enc_sock.sendall(request.encode())
                         banner = enc_sock.recv(1024).decode(errors="ignore")
+                    except Exception:
+                        banner = "Unknown banner"
                 
                 else:
                     banner = "Unknown Banner"
