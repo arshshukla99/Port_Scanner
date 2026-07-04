@@ -93,16 +93,17 @@ def port_scan(port):
                     sock.sendall(request.encode())
                     banner = sock.recv(1024).decode(errors="ignore")
                 
-                '''if port == 443:
+                if port == 443:
                     try :
                         import ssl
-                        context = ssl.create_default_context()
-                        sock_context = context.wrap_sockets(sock,server_hostname=args.target)
+                        context = ssl.create_default_context()                             #creates the tls configuration/object or you can say wrapper using ssl.
+                        enc_sock = context.wrap_sockets(sock,server_hostname=args.target)  #wraps the socket request with the tls layer and does tls handshake which establishes the encrypted session.
                     
-                        request = f"GET / HTTP/1.1\r\n"
-f"Host : {args.target}"
-"Connection: close\r\n"'''
-               
+                        request = f"GET / HTTP/1.1\r\nHost: {args.target}\r\nConnection: close\r\n\r\n"
+                    
+                        enc_sock.sendall(request.encode())
+                        banner = enc_sock.recv(1024).decode(errors="ignore")
+                
                 else:
                     banner = "Unknown Banner"
                     
@@ -228,4 +229,3 @@ if args.output:
                 fobj.writerow([i,dict_port[i]["service"],dict_port[i]["banner"]])
                 
             print(f"\nFile {args.output} " + Fore.LIGHTGREEN_EX + "EXPORT SUCCESSFUL" + Style.RESET_ALL + " Saved to this Current Path :)")
-
