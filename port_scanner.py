@@ -83,7 +83,8 @@ def port_scan(port):
                 
             if not args.verbose:
                 print(f"Port {port} is " + Fore.LIGHTGREEN_EX + f"OPEN" + Style.RESET_ALL + Fore.CYAN + f" : {service}" + Style.RESET_ALL)
-
+            
+            #Trying Banner Grabbing for each Open Port
             try:
                 if port in [21,22,25,110,3306]:
                     banner = sock.recv(1024).decode(errors="ignore")
@@ -91,19 +92,34 @@ def port_scan(port):
                 elif port == 80:
                     request = f"GET / HTTP/1.1\r\nHost: {args.target}\r\n\r\n"
                     sock.sendall(request.encode())
-                    banner = sock.recv(1024).decode(errors="ignore")
+                    http_banner = sock.recv(1024).decode(errors="ignore")
+                    
+                    #separate Server info from the large output
+                    for line in http_banner.splitlines():
+                        if line.startswith("Server:"):
+                            banner = line.split("Server: ")[1]
                 
-                if port == 443:
+                elif port == 443:
                     try :
-                        context = ssl.create_default_context()                             #creates the tls configuration/object or you can say wrapper using ssl.
-                        enc_sock = context.wrap_socket(sock,server_hostname=args.target)  #wraps the socket request with the tls layer and does tls handshake which establishes the encrypted session.  
+                        #creates the tls configuration/object or you can say wrapper using ssl that doesn't verify the certificate and doesn't raise [SSL: CERTIFICATE_VERIFY_FAILED] error.
+                        context = ssl._create_unverified_context()                         
+                        
+                        #wraps the socket request with the tls layer and does tls handshake which establishes the encrypted session.
+                        enc_sock = context.wrap_socket(sock,server_hostname=args.target)  
                     
                         request = f"GET / HTTP/1.1\r\nHost: {args.target}\r\nConnection: close\r\n\r\n"
                     
                         enc_sock.sendall(request.encode())
-                        banner = enc_sock.recv(1024).decode(errors="ignore")
-                    except Exception:
-                        banner = "Unknown banner"
+                        https_banner = enc_sock.recv(1024).decode(errors="ignore")
+                        
+                        #separate Server info from the large output
+                        for line in https_banner.splitlines():
+                            if line.startswith("Server:"):
+                                banner = line.split("Server: ")[1]
+                        
+                        
+                    except Exception as e:
+                        banner = e
                 
                 else:
                     banner = "Unknown Banner"
@@ -230,3 +246,4 @@ if args.output:
                 fobj.writerow([i,dict_port[i]["service"],dict_port[i]["banner"]])
                 
             print(f"\nFile {args.output} " + Fore.LIGHTGREEN_EX + "EXPORT SUCCESSFUL" + Style.RESET_ALL + " Saved to this Current Path :)")
+            
