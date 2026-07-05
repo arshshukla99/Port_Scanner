@@ -116,10 +116,9 @@ def port_scan(port):
                         for line in https_banner.splitlines():
                             if line.startswith("Server:"):
                                 banner = line.split("Server: ")[1]
-                        
-                        
-                    except Exception as e:
-                        banner = e
+                                
+                    except Exception:
+                        banner = "Unknown Banner"
                 
                 else:
                     banner = "Unknown Banner"
