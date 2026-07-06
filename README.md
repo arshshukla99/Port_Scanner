@@ -39,7 +39,7 @@ It First takes several inputs from the user like - IP Address & Range of ports i
 Note - Supports Provide IPv4 address only.
 
 Then it Attempts to connect on each port which is in the range of Start Port to End Port on the provided IP address.
-- If Connection Succeeds -> Port {Number} is OPEN : <Service>
+- If Connection Succeeds -> Port {Number} is OPEN : {Service}
 - If Connection Failed -> Port is CLOSED
 
 ## How to Use :
