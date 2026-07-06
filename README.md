@@ -32,6 +32,7 @@ It was made to understand :
 - Argparse Module
 - Colorama Module
 - JSON Module
+- CSV Module
 
 ## How it Works :
 It First takes several inputs from the user like - IP Address & Range of ports i.e. Starting Port and Ending Port.
