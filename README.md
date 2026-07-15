@@ -5,21 +5,21 @@ It was made to understand :
 - TCP Connections.
 - Network Scanning.
 - Open and Closed ports.
-- Services on each ports.
+- Services on each port.
 - Socket Programming.
 - Multithreading in Python.
 - Service Detection.
 - Banner Grabbing.
 - Error Management
-- Working with json Files.
+- Working with JSON files.
 - Thread Lock
 
 ## Features Include :
-- Scan Real Time custom port ranges.
-- Can Scan all the 65535 Ports.
+- Scan real-time custom port ranges.
+- Can Scan all 65535 Ports.
 - Proper Error Handling Included.
-- Multithread support that provide fast results.
-- Service Detection for all the 65535 ports.
+- Multithread support that provides fast results.
+- Service Detection for all 65535 ports.
 - Banner Grabbing for Open Ports.
 - JSON Export of Open Ports.
 - CSV Export of Open Ports.
@@ -35,27 +35,27 @@ It was made to understand :
 - CSV Module
 
 ## How it Works :
-It First takes several inputs from the user like - IP Address & Range of ports i.e. Starting Port and Ending Port.
-Note - Supports Provide IPv4 address only.
+It first takes several inputs from the user, like an IP Address & Range of ports, i.e. Starting Port and Ending Port.
+Note: Supports IPv4 addresses only.
 
-Then it Attempts to connect on each port which is in the range of Start Port to End Port on the provided IP address.
+Then it attempts to connect on each port which is in the range from the Start Port to the End Port on the provided IP address.
 - If Connection Succeeds -> Port {Number} is OPEN : {Service}
-- If Connection Failed -> Port is CLOSED
+- If the connection fails -> Port is CLOSED
 
 ## How to Use :
-Step 1 : Clone the Repository
+Step 1: Clone the Repository
 
 ```
 $ git clone https://github.com/arshshukla99/Port_Scanner
 ```
 
-Step 2 : Navigate to the Project Folder
+Step 2: Navigate to the Project Folder
 
 ```
-$ cd port_scanner.py
+$ cd Port_Scanner
 ```
 
-Step 3 : Run the Script 'port_scanner.py'
+Step 3: Run the Script 'port_scanner.py'
 
 ```
 $ python3 port_scanner.py -t 192.168.43.169 -s 1 -e 1000
