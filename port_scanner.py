@@ -13,7 +13,7 @@ import threading
 from colorama import Fore, Style
 
 print('-'*100)
-print(" "*35,"Simple Port Scanner")
+print(" "*35,"Python TCP Port Scanner")
 print("-"*100)
 
 try:
@@ -29,11 +29,11 @@ parser = argparse.ArgumentParser(description="Python Based Fast Port Scanner", u
 # Added arguments in parser for more options
 
 parser.add_argument("-s","--start", type=int, help="Start Port", default=1)
-parser.add_argument("-e","--end", type=int, help= "End Port", default= 65535)
+parser.add_argument("-e","--end", type=int, help= "End Port", default= 1000)
 parser.add_argument("-t","--target", dest="target", required= True, help="Target IP or Domain")
 parser.add_argument("-th","--threads", dest="threads",type=int, help= "No. of Threads To be Used", default=200)
 parser.add_argument("-V","--verbose", dest="verbose", action= "store_true", help= "Verbose Output")
-parser.add_argument("-v","--version", action="version", version= "%(prog)s 1.4", help= "Diplay %(prog)s Version")
+parser.add_argument("-v","--version", action="version", version= "%(prog)s 1.5", help= "Diplay %(prog)s Version")
 parser.add_argument("-j","--json", dest="json", help = "Export JSON Output")
 parser.add_argument("-o","--output", dest="output", help = "Export Output (To a .csv file)")
 parser.add_argument("-O","--os-detect", action="store_true", help = "Attempt OS fingerprinting using nmap")
@@ -68,7 +68,7 @@ dict_port = {}
 
 def port_scan(port):
     sock = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-    sock.settimeout(0.3) 
+    sock.settimeout(2) 
     try:
         if args.verbose :
             print("Scanning Port :",port)   
@@ -116,7 +116,12 @@ def port_scan(port):
                         for line in https_banner.splitlines():
                             if line.startswith("Server:"):
                                 banner = line.split("Server: ")[1]
-                                
+                            else:
+                                banner = "Unknown Banner"
+                    
+                    except ssl.SSLError:
+                        banner = "TLS Handshake Failed"
+                        
                     except Exception:
                         banner = "Unknown Banner"
                 
@@ -245,4 +250,3 @@ if args.output:
                 fobj.writerow([i,dict_port[i]["service"],dict_port[i]["banner"]])
                 
             print(f"\nFile {args.output} " + Fore.LIGHTGREEN_EX + "EXPORT SUCCESSFUL" + Style.RESET_ALL + " Saved to this Current Path :)")
-            
